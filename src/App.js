@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {
+  getItems,
+  addItem,
+  updateItem,
+  deleteItem
+} from "./services/GroceryService";
+
 
 function App() {
   const [items, setItems] = useState([]);
@@ -6,11 +13,10 @@ function App() {
   const [quantity, setQuantity] = useState("");
   const [editingId, setEditingId] = useState(null);
 
-  // 🔹 READ – fetch all groceries
+  // 🔹 READ
   const fetchItems = () => {
-    fetch("http://localhost:8080/api/groceries")
-      .then(res => res.json())
-      .then(data => setItems(data))
+    getItems()
+      .then(res => setItems(res.data))
       .catch(err => console.error("Fetch error:", err));
   };
 
@@ -33,11 +39,7 @@ function App() {
 
     // ADD
     if (editingId === null) {
-      fetch("http://localhost:8080/api/groceries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
+      addItem(payload)
         .then(() => {
           setItemName("");
           setQuantity("");
@@ -47,11 +49,7 @@ function App() {
     }
     // UPDATE
     else {
-      fetch(`http://localhost:8080/api/groceries/${editingId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
+      updateItem(editingId, payload)
         .then(() => {
           setEditingId(null);
           setItemName("");
@@ -62,7 +60,7 @@ function App() {
     }
   };
 
-  // 🔹 EDIT (load values into input)
+  // 🔹 EDIT
   const editItem = (item) => {
     setItemName(item.itemName);
     setQuantity(item.quantity);
@@ -70,10 +68,8 @@ function App() {
   };
 
   // 🔹 DELETE
-  const deleteItem = (id) => {
-    fetch(`http://localhost:8080/api/groceries/${id}`, {
-      method: "DELETE"
-    })
+  const handleDelete = (id) => {
+    deleteItem(id)
       .then(() => fetchItems())
       .catch(err => console.error("Delete error:", err));
   };
@@ -109,7 +105,7 @@ function App() {
           <li key={item.id}>
             {item.itemName} - {item.quantity}{" "}
             <button onClick={() => editItem(item)}>✏️</button>{" "}
-            <button onClick={() => deleteItem(item.id)}>❌</button>
+            <button onClick={() => handleDelete(item.id)}>❌</button>
           </li>
         ))}
       </ul>
