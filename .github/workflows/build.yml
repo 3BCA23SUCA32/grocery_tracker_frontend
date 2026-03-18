@@ -28,6 +28,11 @@ jobs:
             -Dsonar.projectKey=varshabbb_grocery_tracker_frontend
             -Dsonar.organization=varshabbb
             -Dsonar.sources=src
+            -Dsonar.tests=src
+            -Dsonar.exclusions=build/**
             -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.verbose=true
+            -X
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
