@@ -1,0 +1,12 @@
+
+> grocery-tracker-frontend@0.1.0 test
+> react-scripts test --watchAll=false
+
+PASS src/App.test.js
+  √ renders grocery tracker heading (123 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        3.797 s
+Ran all test suites.
