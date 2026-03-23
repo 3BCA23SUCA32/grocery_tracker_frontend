@@ -6,7 +6,7 @@ export default function GroceryTracker() {
   const [quantity, setQuantity] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false); // ✅ NEW
+  const [loading, setLoading] = useState(false);
 
   const handleAdd = () => {
     if (itemName.trim() === "" || quantity === "") {
@@ -15,7 +15,7 @@ export default function GroceryTracker() {
       return;
     }
 
-    setLoading(true); // ✅ start loading
+    setLoading(true);
 
     addItem({
       itemName,
@@ -28,7 +28,6 @@ export default function GroceryTracker() {
         setError("");
         setSuccess("Item added successfully!");
 
-        // ✅ Auto hide success after 2 sec
         setTimeout(() => setSuccess(""), 2000);
       })
       .catch(() => {
@@ -36,7 +35,7 @@ export default function GroceryTracker() {
         setSuccess("");
       })
       .finally(() => {
-        setLoading(false); // ✅ stop loading
+        setLoading(false);
       });
   };
 
@@ -53,9 +52,11 @@ export default function GroceryTracker() {
         backgroundColor: "#fafafa"
       }}
     >
-      <h3 style={{ marginBottom: "15px" }}>🛒 Grocery Tracker</h3>
+      <h3 style={{ marginBottom: "15px", color: "#333" }}>
+        🛒 Grocery Tracker
+      </h3>
 
-      {/* ❌ ERROR */}
+      {/* ERROR */}
       {error && (
         <p
           style={{
@@ -70,7 +71,7 @@ export default function GroceryTracker() {
         </p>
       )}
 
-      {/* ✅ SUCCESS */}
+      {/* SUCCESS */}
       {success && (
         <p
           style={{
@@ -85,36 +86,40 @@ export default function GroceryTracker() {
         </p>
       )}
 
-      {/* INPUT - ITEM */}
-      <input
-        placeholder="Enter item name"
-        value={itemName}
-        onChange={(e) => setItemName(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-          outline: "none"
-        }}
-      />
+      {/* ITEM INPUT WITH ICON */}
+      <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+        <span style={{ marginRight: "6px" }}>📦</span>
+        <input
+          placeholder="Enter item name"
+          value={itemName}
+          onChange={(e) => setItemName(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+            outline: "none"
+          }}
+        />
+      </div>
 
-      {/* INPUT - QUANTITY */}
-      <input
-        type="number"
-        placeholder="Enter quantity"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "12px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-          outline: "none"
-        }}
-      />
+      {/* QUANTITY INPUT WITH ICON */}
+      <div style={{ display: "flex", alignItems: "center", marginBottom: "12px" }}>
+        <span style={{ marginRight: "6px" }}>🔢</span>
+        <input
+          type="number"
+          placeholder="Enter quantity"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+            outline: "none"
+          }}
+        />
+      </div>
 
       {/* BUTTON */}
       <button
@@ -122,16 +127,23 @@ export default function GroceryTracker() {
         disabled={loading}
         style={{
           width: "100%",
-          padding: "9px",
+          padding: "10px",
           backgroundColor: loading ? "#999" : "#28a745",
           color: "white",
           border: "none",
           borderRadius: "6px",
           cursor: loading ? "not-allowed" : "pointer",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          transition: "0.3s"
+        }}
+        onMouseOver={(e) => {
+          if (!loading) e.target.style.backgroundColor = "#218838";
+        }}
+        onMouseOut={(e) => {
+          if (!loading) e.target.style.backgroundColor = "#28a745";
         }}
       >
-        {loading ? "Adding..." : "Add Item"}
+        {loading ? "Adding..." : "➕ Add Item"}
       </button>
     </div>
   );
