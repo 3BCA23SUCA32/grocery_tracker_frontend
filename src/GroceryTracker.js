@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getItems, addItem, updateItem, deleteItem } from "./services/GroceryService";
-import { addItem } from "./services/GroceryService";
 
 export default function GroceryTracker() {
   const [itemName, setItemName] = useState("");
