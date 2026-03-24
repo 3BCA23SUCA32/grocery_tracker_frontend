@@ -10,7 +10,6 @@ export default function GroceryTracker() {
   const [success, setSuccess] = useState("");
   login-feature
   const [loading, setLoading] = useState(false);
-  const [loading, setLoading] = useState(false); // ✅ NEW
   main
 
   const fetchItems = () => {
