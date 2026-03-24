@@ -43,7 +43,7 @@ export default function GroceryTracker() {
     login-feature
     const payload = {
       itemName: itemName.trim(),
-    setLoading(true); // ✅ start loading
+    setLoading(); // ✅ start loading
 
     addItem({
       itemName,
